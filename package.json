@@ -3,6 +3,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
+    "export": "next export",
     "start": "next start",
     "lint": "next lint"
   },
