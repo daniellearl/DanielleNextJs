@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import { db } from '@vercel/postgres';
 import { invoices, customers, revenue, users } from '../lib/placeholder-data';
+import { NextResponse } from 'next/server';
 
 export async function GET() {
   const client = await db.connect();
@@ -8,7 +9,7 @@ export async function GET() {
   try {
     // Create necessary extensions and tables
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
-    
+
     // Seed users
     await client.sql`
       CREATE TABLE IF NOT EXISTS users (
@@ -83,20 +84,10 @@ export async function GET() {
       `),
     );
 
-    return new Response(JSON.stringify({ message: 'Database seeded successfully' }), {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    return NextResponse.json({ message: 'Database seeded successfully' }, { status: 200 });
   } catch (error) {
     console.error('Error seeding database:', error);
-    return new Response(JSON.stringify({ error: 'Failed to seed database' }), {
-      status: 500,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    return NextResponse.json({ error: 'Failed to seed database', details: error instanceof Error ? error.message : 'Unknown error' }, { status: 500 });
   } finally {
     client.release(); // Release the database connection
   }
