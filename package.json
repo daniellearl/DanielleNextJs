@@ -4,7 +4,9 @@
     "build": "next build",
     "dev": "next dev",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "ts-node app/seed/route.ts" 
+
   },
   "dependencies": {
     "@heroicons/react": "^2.1.4",
@@ -31,6 +33,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.15"
   },
+  
   "engines": {
     "node": ">=20.12.0"
   }
